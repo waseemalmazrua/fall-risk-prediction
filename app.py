@@ -8,7 +8,7 @@ st.set_page_config(page_title="Fall Risk Prediction", layout="wide")
 st.title("Fall Risk Prediction Dashboard")
 st.markdown("Upload real patient data to analyze fall risk and generate personalized recommendations.")
 
-# 📌 تعليمات البيانات
+#  تعليمات البيانات
 st.markdown("#### Required Data Format")
 st.info("""
 Upload a CSV or Excel file with the following columns:
@@ -49,7 +49,7 @@ if uploaded_file:
     accuracy = model.score(X_test, y_test)
     st.metric("Model Accuracy", f"{accuracy * 100:.2f}%")
 
-    # 📊 Feature Importance Table
+    #  Feature Importance Table
     st.write("### Feature Importance")
     importance_df = pd.DataFrame({
         "Feature": features.columns,
@@ -64,7 +64,7 @@ if uploaded_file:
         ])
     )
 
-    # 🖼️ الرسمات جنب بعض
+    #
     col1, col2 = st.columns(2)
 
     with col1:
@@ -87,7 +87,7 @@ if uploaded_file:
         plt.tight_layout()
         st.pyplot(fig2)
 
-    # 📄 توصيات
+    # توصيات
     st.write("### Patient Recommendations")
 
     def get_recommendation(risk):
@@ -97,8 +97,21 @@ if uploaded_file:
 
     st.dataframe(df[["Patient_ID", "Risk_Level", "Recommendation"]], use_container_width=True)
 
-    # ⬇️ تحميل النتائج
+    # تحميل النتائج
     st.write("### Download Results")
     output = df[["Patient_ID", "Age", "Mobility_Score", "Medications_Count", "History_of_Falls", "Risk_Level", "Recommendation"]]
     csv = output.to_csv(index=False).encode("utf-8")
     st.download_button("Download as CSV", data=csv, file_name="fall_risk_predictions.csv", mime="text/csv")
+
+st.markdown(
+    """
+    <hr style='margin-top:40px;'>
+    <div style='text-align: center; font-size: 12px; color: gray;'>
+        Built by <strong>Waseem Almazrua</strong> · 
+        <a href='https://www.linkedin.com/in/waseemalmazrua/' target='_blank' style='color: gray; text-decoration: none;'>
+            LinkedIn
+        </a>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
